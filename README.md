@@ -2,11 +2,11 @@
 
 ## 一、简介
 
-> 这是一个安卓开发的简易记事本。
+ 这是一个安卓开发的简易记事本。
 
-> 基本功能：添加修改Notes，根据关键词搜索相关Notes
->
-> 扩展功能：修改Note背景，为Note增加提醒功能。
+基本功能：添加修改Notes，根据关键词搜索相关Notes
+
+扩展功能：修改Note背景，为Note增加提醒功能。
 
 [基本功能截图] (./intro_pic/基本功能截图.md "基本功能截图")
 
@@ -16,7 +16,6 @@
 
 ## 二、LayOuts
 
-> Layouts
 
 activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search和add按钮
 
@@ -40,7 +39,7 @@ activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search和add按�
 
 ```
 
-> notes_list.xml  由一个显示该条Note的背景的imageView一个显示闹钟图标的imageView和多个TextView组成。
+ notes_list.xml  由一个显示该条Note的背景的imageView一个显示闹钟图标的imageView和多个TextView组成。
 
 
 
@@ -250,7 +249,7 @@ activity_edit.xml
 
 ```
 
-> Search.xml 由一个SearchView和一个ListView组成以实现动态显示条目
+ Search.xml 由一个SearchView和一个ListView组成以实现动态显示条目
 
 
 
@@ -284,71 +283,71 @@ MainActivity中OnCreate()方法。
 
 
 
-> loadHistoryData() 使用LitePal框架中的DataSupport.findAll()读取数据到List<Memo> memoes 和 List<OneMemo> memolist中用于mainActivity中所有条目的展示以及Edit中单个条目的展示。
->
-> ```java
->  private void loadHistoryData() {
->         List<Memo> memoes= DataSupport.findAll(Memo.class);
-> 
->         if(memoes.size()==0) {
->             initializeLitePal();
->             memoes = DataSupport.findAll(Memo.class);
->         }
-> 
->         for(Memo record:memoes) {
->             int tag = record.getTag();
->             String textDate = record.getTextDate();
->             String textTime = record.getTextTime();
->             boolean alarm = record.getAlarm().length() > 1 ? true : false;
->             String mainText = record.getMainText();
->             String title = record.getTitle();
->             OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText,title);
->             memolist.add(temp);
->         }
->     }
-> ```
->
-> 单击和长按条目事件。单击进入编辑条目界面，长按删除条目
->
-> ```java
-> @Override
->     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
->         Intent it=new Intent(this,Edit.class);
-> 
->         Memo record=getMemoWithNum(position);
-> 
->         //add information into intent
->         transportInformationToEdit(it, record);
-> 
->         startActivityForResult(it,position);
->     }
-> 
->     @Override
->     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-> 
->         int n=memolist.size();
-> 
->         //if this memo has an alarm clock
->         //cancel it
->         if(memolist.get(position).getAlarm()) {
->             cancelAlarm(position);
->         }
->         memolist.remove(position);
->         adapter.notifyDataSetChanged();
-> 
->         String whereArgs = String.valueOf(position); //why not position ?
->         DataSupport.deleteAll(Memo.class, "num = ?", whereArgs);
-> 
->         for(int i=position+1; i<n; i++) {
->             ContentValues temp = new ContentValues();
->             temp.put("num", i-1);
->             String where = String.valueOf(i);
->             DataSupport.updateAll(Memo.class, temp, "num = ?", where);
->         }
-> 
->         return true;
->     }
-> ```
+ loadHistoryData() 使用LitePal框架中的DataSupport.findAll()读取数据到List<Memo> memoes 和 List<OneMemo> memolist中用于mainActivity中所有条目的展示以及Edit中单个条目的展示。
+
+ ```java
+  private void loadHistoryData() {
+         List<Memo> memoes= DataSupport.findAll(Memo.class);
+ 
+         if(memoes.size()==0) {
+             initializeLitePal();
+             memoes = DataSupport.findAll(Memo.class);
+         }
+ 
+         for(Memo record:memoes) {
+             int tag = record.getTag();
+             String textDate = record.getTextDate();
+             String textTime = record.getTextTime();
+             boolean alarm = record.getAlarm().length() > 1 ? true : false;
+             String mainText = record.getMainText();
+             String title = record.getTitle();
+             OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText,title);
+             memolist.add(temp);
+         }
+     }
+ ```
+
+ 单击和长按条目事件。单击进入编辑条目界面，长按删除条目
+
+ ```java
+ @Override
+     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+         Intent it=new Intent(this,Edit.class);
+ 
+         Memo record=getMemoWithNum(position);
+ 
+         //add information into intent
+         transportInformationToEdit(it, record);
+ 
+         startActivityForResult(it,position);
+     }
+ 
+     @Override
+     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+ 
+         int n=memolist.size();
+ 
+         //if this memo has an alarm clock
+         //cancel it
+         if(memolist.get(position).getAlarm()) {
+             cancelAlarm(position);
+         }
+         memolist.remove(position);
+         adapter.notifyDataSetChanged();
+ 
+         String whereArgs = String.valueOf(position); //why not position ?
+         DataSupport.deleteAll(Memo.class, "num = ?", whereArgs);
+ 
+         for(int i=position+1; i<n; i++) {
+             ContentValues temp = new ContentValues();
+             temp.put("num", i-1);
+             String where = String.valueOf(i);
+             DataSupport.updateAll(Memo.class, temp, "num = ?", where);
+         }
+ 
+         return true;
+     }
+ ```
 
 OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast弹出提示，notification在下拉窗显示通知，手机振动(须在Mainefest中声明权限)
 
