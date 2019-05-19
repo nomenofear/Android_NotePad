@@ -4,9 +4,9 @@
 
  这是一个安卓开发的简易记事本。
 
-基本功能：添加修改Notes，根据关键词搜索相关Notes
+基本功能：添加修改删除Notes，根据关键词搜索相关Notes
 
-扩展功能：修改Note背景，为Note增加提醒功能。
+扩展功能：修改Note背景，为Note增加定时提醒功能。
 
 <a href="./intro_pic/基本功能截图.md">基本功能截图 </a>
 
@@ -38,11 +38,9 @@ activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search和add按�
         android:padding="5dp"/>
 
 ```
+![noteList布局](./intro_pic/noteList布局.png) <br/>
 
  notes_list.xml  由一个显示该条Note的背景的imageView一个显示闹钟图标的imageView和多个TextView组成。
-
-
-
 activity_edit.xml 
 
 ```xml
@@ -244,12 +242,10 @@ activity_edit.xml
             android:layout_height="fill_parent" />
     </LinearLayout>
 ```
+![detail布局](./intro_pic/detail布局.png) <br/>
 
-```
-
-```
-
- Search.xml 由一个SearchView和一个ListView组成以实现动态显示条目
+ Search.xml 由一个SearchView和一个ListView组成以实现动态显示条目 <br/>
+ ![search布局](./intro_pic/search布局.png) <br/>
 
 
 
