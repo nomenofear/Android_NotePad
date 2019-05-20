@@ -6,7 +6,7 @@
 
 基本功能：添加修改删除Notes，根据关键词搜索相关Notes
 
-扩展功能：修改Note背景，为Note增加定时提醒功能。
+扩展功能：修改Note背景，排序功能，为Note增加定时提醒功能。
 
 <a href="./intro_pic/基本功能截图.md">基本功能截图 </a>
 
@@ -395,8 +395,45 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         manager.notify(num,notification);
     }
 ```
+<br/>
+搜索
+```
+  protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        SearchView searchview = (SearchView)findViewById(R.id.search_view);
+        //为查询文本框注册监听器
+        searchview.setOnQueryTextListener(SearchActivity.this);
+    }
+  @Override
+    public boolean onQueryTextChange(String s) {
 
+        Cursor c= DataSupport.findBySQL("select * from memo where title like '%"+s+"%'");
 
+        if(c.moveToFirst()){
+            do{
+                int tag = c.getInt(c.getColumnIndex("tag"));
+                Log.d("s", "onQueryTextChange: "+tag);
+                String textDate = c.getString(c.getColumnIndex("textdate"));
+                Log.d("textDate", "onQueryTextChange: "+textDate);
+                String textTime = c.getString(c.getColumnIndex("texttime"));
+                Log.d("textTime", "onQueryTextChange: "+textDate);
+                boolean alarm = c.getString(c.getColumnIndex("alarm")).length() > 1 ? true : false;
+                String mainText = c.getString(c.getColumnIndex("maintext"));
+                String title = c.getString(c.getColumnIndex("title"));
+                OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText,title);
+                memolist.add(temp);
+                //Log.d("MainActivity2", "result: " +result );
+            }while(c.moveToNext());
+        }
+           c.close();
+
+        adapter=new MemoAdapter(SearchActivity.this, R.layout.notes_list, memolist);
+        setListAdapter(adapter);
+        return false;
+    }
+ ``` 
+ <br/>
 
 ## End
 
