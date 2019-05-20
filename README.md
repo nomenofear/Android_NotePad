@@ -395,9 +395,9 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         manager.notify(num,notification);
     }
 ```
-<br/>
+
 搜索
-```
+```java
   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -405,8 +405,6 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         //为查询文本框注册监听器
         searchview.setOnQueryTextListener(SearchActivity.this);
     }
-```
-```
   @Override
     public boolean onQueryTextChange(String s) {
 
