@@ -17,7 +17,7 @@
 ## 二、LayOuts
 
 
-activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search和add按钮
+activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search、sort和add按钮
 
 ```xml
  <android.support.v7.widget.Toolbar
@@ -38,7 +38,7 @@ activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search和add按�
         android:padding="5dp"/>
 
 ```
-![noteList布局](./intro_pic/noteList布局.png) <br/>
+![noteList布局](./intro_pic/noteList布局1.png) <br/>
 
  notes_list.xml  由一个显示该条Note的背景的imageView一个显示闹钟图标的imageView和多个TextView组成。
 activity_edit.xml 
