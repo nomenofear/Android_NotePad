@@ -405,6 +405,8 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         //为查询文本框注册监听器
         searchview.setOnQueryTextListener(SearchActivity.this);
     }
+```
+```
   @Override
     public boolean onQueryTextChange(String s) {
 
@@ -433,7 +435,6 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         return false;
     }
  ``` 
- <br/>
 
 ## End
 
