@@ -14,7 +14,7 @@
 
 
 
-## 二、LayOuts
+## 二、Layouts
 
 
 activity_main.xml 使用ToolBar和ListView，ToolBar中定义了search、sort和add按钮
