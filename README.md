@@ -267,7 +267,7 @@ MainActivity中OnCreate()方法。
         //addDataLitepPal();
         loadHistoryData();
 
-        adapter=new MemoAdapter(MainActivity.this, R.layout.notes_list, memolist);
+        adapter=new NoteAdapter(MainActivity.this, R.layout.notes_list, notelist);
         lv=(ListView) findViewById(R.id.list);
         lv.setAdapter(adapter);
 
@@ -283,22 +283,22 @@ MainActivity中OnCreate()方法。
 
  ```java
   private void loadHistoryData() {
-         List<Memo> memoes= DataSupport.findAll(Memo.class);
+         List<Note> notes= DataSupport.findAll(Note.class);
  
-         if(memoes.size()==0) {
+         if(notes.size()==0) {
              initializeLitePal();
-             memoes = DataSupport.findAll(Memo.class);
+             notes = DataSupport.findAll(Note.class);
          }
  
-         for(Memo record:memoes) {
+         for(Note record:notes) {
              int tag = record.getTag();
              String textDate = record.getTextDate();
              String textTime = record.getTextTime();
              boolean alarm = record.getAlarm().length() > 1 ? true : false;
              String mainText = record.getMainText();
              String title = record.getTitle();
-             OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText,title);
-             memolist.add(temp);
+             OneNote temp = new OneNote(tag, textDate, textTime, alarm, mainText,title);
+             notelist.add(temp);
          }
      }
  ```
@@ -310,7 +310,7 @@ MainActivity中OnCreate()方法。
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
          Intent it=new Intent(this,Edit.class);
  
-         Memo record=getMemoWithNum(position);
+         Note record=getNoteWithNum(position);
  
          //add information into intent
          transportInformationToEdit(it, record);
@@ -321,24 +321,24 @@ MainActivity中OnCreate()方法。
      @Override
      public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
  
-         int n=memolist.size();
+         int n=notelist.size();
  
-         //if this memo has an alarm clock
+         //if this note has an alarm clock
          //cancel it
-         if(memolist.get(position).getAlarm()) {
+         if(notelist.get(position).getAlarm()) {
              cancelAlarm(position);
          }
-         memolist.remove(position);
+         notelist.remove(position);
          adapter.notifyDataSetChanged();
  
          String whereArgs = String.valueOf(position); //why not position ?
-         DataSupport.deleteAll(Memo.class, "num = ?", whereArgs);
+         DataSupport.deleteAll(Note.class, "num = ?", whereArgs);
  
          for(int i=position+1; i<n; i++) {
              ContentValues temp = new ContentValues();
              temp.put("num", i-1);
              String where = String.valueOf(i);
-             DataSupport.updateAll(Memo.class, temp, "num = ?", where);
+             DataSupport.updateAll(Note.class, temp, "num = ?", where);
          }
  
          return true;
@@ -349,7 +349,7 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
 
 ```java
  public void onReceive(Context context, Intent intent) {
-        //showMemo(context);
+        //showNote(context);
 
         alarmId=intent.getIntExtra("alarmId",0);
 
@@ -373,7 +373,7 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         //****************************************************
         Intent intent=new Intent(context,Edit.class);
 
-        Memo record= getMemoWithId(num);
+        Note record= getNoteWithId(num);
         deleteTheAlarm(num);//or num
 
         transportInformationToEdit(intent,record);
@@ -408,7 +408,7 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
   @Override
     public boolean onQueryTextChange(String s) {
 
-        Cursor c= DataSupport.findBySQL("select * from memo where title like '%"+s+"%'");
+        Cursor c= DataSupport.findBySQL("select * from note where title like '%"+s+"%'");
 
         if(c.moveToFirst()){
             do{
@@ -421,14 +421,14 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
                 boolean alarm = c.getString(c.getColumnIndex("alarm")).length() > 1 ? true : false;
                 String mainText = c.getString(c.getColumnIndex("maintext"));
                 String title = c.getString(c.getColumnIndex("title"));
-                OneMemo temp = new OneMemo(tag, textDate, textTime, alarm, mainText,title);
-                memolist.add(temp);
+                OneNote temp = new OneNote(tag, textDate, textTime, alarm, mainText,title);
+                notelist.add(temp);
                 //Log.d("MainActivity2", "result: " +result );
             }while(c.moveToNext());
         }
            c.close();
 
-        adapter=new MemoAdapter(SearchActivity.this, R.layout.notes_list, memolist);
+        adapter=new NoteAdapter(SearchActivity.this, R.layout.notes_list, notelist);
         setListAdapter(adapter);
         return false;
     }
