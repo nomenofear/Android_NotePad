@@ -145,75 +145,7 @@ activity_edit.xml
             android:layout_gravity="center"
             >
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/yellow"
-                android:checked="false"
-                android:button="@null"
-                android:background="@drawable/radio"
-                android:layout_weight="2" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/blue"
-                android:checked="false"
-                android:button="@null"
-                android:background="@drawable/radio2"
-                android:layout_weight="2" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/green"
-                android:checked="false"
-                android:button="@null"
-                android:background="@drawable/radio3"
-                android:layout_weight="2" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/red"
-                android:checked="false"
-                android:button="@null"
-                android:background="@drawable/radio4"
-                android:layout_weight="2" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/white"
-                android:checked="false"
-                android:button="@null"
-                android:background="@drawable/radio5"
-                android:layout_weight="2" />
+           <!-- 这里有五个更改主题的RadioButton-->
 
             <Space
                 android:layout_width="wrap_content"
