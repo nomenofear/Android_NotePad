@@ -234,6 +234,38 @@ MainActivity中OnCreate()方法。
          }
      }
  ```
+addRecordToLitePal()增加一条Note,点击Edit这个avtivity中的save按钮触发onSave()方法，onSave()方法中调用returnResult()，returnResult()返回更新后的数据和RESULT_OK到MainActivity.
+```java
+
+    //press the add button
+    public void onAdd() {
+        Intent it=new Intent(this,Edit.class);
+
+        int position = memolist.size();
+
+        Calendar c=Calendar.getInstance();
+        String current_date=getCurrentDate(c);
+        String current_time=getCurrentTime(c);
+
+        it.putExtra("num",position);
+        it.putExtra("tag",0);
+        it.putExtra("textDate",current_date);
+        it.putExtra("textTime",current_time);
+        it.putExtra("alarm","");
+        it.putExtra("mainText","");
+        it.putExtra("title","");
+
+        startActivityForResult(it,position);
+    }
+    
+    
+    //Edit这个Activity中press the save button
+    public void onSave(View v) {
+        returnResult();
+        finish();
+    }
+   
+  ```
 
  单击和长按条目事件。单击进入编辑条目界面，长按删除条目
 
@@ -328,7 +360,7 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
     }
 ```
 
-搜索
+根据title搜索
 ```java
   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -365,6 +397,40 @@ OneShotAlarm extends BroadcastReceiver 广播接收器，闹钟时间到了Toast
         return false;
     }
  ``` 
-
+在Edit这个Activity中单击RadioButton进行主题切换
+```java
+@Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (tagRadio.getCheckedRadioButtonId()) {
+            case R.id.yellow:
+                tag=0;
+                //edt.setBackgroundColor(color[tag]);
+                myLayout.setBackgroundResource(R.drawable.edit_bg_yellow);
+                break;
+            case R.id.blue:
+                tag=1;
+                //edt.setBackgroundColor(color[tag]);
+                myLayout.setBackgroundResource(R.drawable.edit_bg_blue);
+                break;
+            case R.id.green:
+                tag=2;
+                //edt.setBackgroundColor(color[tag]);
+                myLayout.setBackgroundResource(R.drawable.edit_bg_green);
+                break;
+            case R.id.red:
+                tag=3;
+                //edt.setBackgroundColor(color[tag]);
+                myLayout.setBackgroundResource(R.drawable.edit_bg_red);
+                break;
+            case R.id.white:
+                tag=4;
+                //edt.setBackgroundColor(color[tag]);
+                myLayout.setBackgroundResource(R.drawable.edit_bg_white);
+                break;
+            default:
+                break;
+        }
+    }
+ ```
 ## End
 
